@@ -26,7 +26,7 @@ class LotteryTicketTest extends WordSpec with Matchers  {
       val testCase = for(i <- 1 to 100) yield LotteryTicket.generateFive
       val occurrenceSort: Map[Int, Int] = testCase.flatten.groupBy(identity).mapValues(_.size)
       val overOdds = occurrenceSort.filter(_._2 > 9)
-      overOdds.size should be < 3
+      overOdds.size should be <= 3
     }
   }
 
