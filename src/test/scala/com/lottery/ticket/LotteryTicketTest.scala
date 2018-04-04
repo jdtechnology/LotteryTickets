@@ -268,6 +268,18 @@ class AsyncLotteryTicketTest extends AsyncWordSpec with Matchers {
       val futureSeq = Future.sequence(LotteryTicket.generateXTickets(5000000))
       futureSeq.map{seq => assert(seq.length == 5000000)}
     }
+    "eventually generate a winning ticket" in {
+      var tf = true
+      var winnerSeq: IndexedSeq[Array[Int]] = IndexedSeq(Array(1,2,3,4,5), Array(1,2,3,4,5))
+      val winTick = Array(2,4,5,6,7)
+      while(tf) {
+        val futureSeq = Future.sequence(LotteryTicket.generateXTickets(5000000))
+        futureSeq.map{seq =>
+          if(LotteryTicket.checkWinners(seq, winTick) >= 1) tf = false; winnerSeq = seq
+        }
+      }
+      assert(winnerSeq.contains(winTick))
+    }
     //Maybe add checks for randomness, although we do check randomness without futures above
   }
 }

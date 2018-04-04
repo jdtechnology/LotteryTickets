@@ -40,6 +40,9 @@ object LotteryTicket {
   //Function to check against previous 5 million tickets to check for match against winning ticket (hash map)?
   def checkWinners(tickets: IndexedSeq[Array[Int]], winner: Array[Int] = generateFive): Int = {
     println("------------------------------------ Entropy generated, thanks! ---------------------------------------")
+    tickets.foreach { tick =>
+      println("Ticket: " + tick.toList)
+    }
     val winners = tickets.count(_ sameElements  winner)
     println("Winners: " + winners)
     winners
